@@ -1,19 +1,20 @@
 ---
-pool:  "ubuntu-latest"
+pool:
+  name: "Azure Pipelines" 
+  vmImage: 'ubuntu-latest'
+
 trigger:
   - main
 
-stages: 
-  - stage: Build and Integration
-    displayName: CI-petclinic
-    jobs:
-      - job: mvnjob
-        displayName: mvnsample
-        steps:
-          - task: maven@3
-            inputs:
-              mavenPomFile: 'pom.xml'
-              goals: 'package'
-              publishJUnitResults: true
-              testResultsFiles: '**/surefire-reports/TEST-*.xml'
-              jdkVersionOption: '1.17'
+
+jobs:
+  - job: mavenjob
+    displayName: maven
+    steps:
+      - task: Maven@3
+        inputs:
+          mavenPomFile: 'pom.xml'
+          goals: 'package'
+          publishJUnitResults: true
+          testResultsFiles: '**/surefire-reports/TEST-*.xml'
+          jdkVersionOption: '1.17'
